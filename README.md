@@ -8,7 +8,7 @@ When I need an application inside my homelab, I enable the Pangolin client. That
 
 At home, traffic stays local: AdGuard handles DNS and Nginx Proxy Manager (NPM) provides access to applications. Away from home, the VPS provides the DoH entry point, while Newt connects it to AdGuard. Newt stays connected in the homelab; the mobile device does not need a permanent tunnel.
 
-> This is not a complete setup guide, feel free to adopt it to your own needs. It describes the rough idea and basic configuration.
+> This is not a complete setup guide, feel free to adapt it to your own needs. It describes the rough idea and basic configuration.
 
 
 ## Architecture
@@ -232,7 +232,7 @@ http:
       rule: 'Host(`dns.example.net`) && PathRegexp(`^/dns-query/[A-Za-z0-9_-]+$`) && (Method(`GET`) || Method(`POST`))'
       entryPoints:
         - websecure
-      service: 2-AdGuard-DoH-Test-service@http # Replace with your generated service.
+      service: REPLACE_WITH_PANGOLIN_GENERATED_SERVICE@http # Replace with your generated service.
       middlewares:
         - crowdsec@file
       priority: 200
@@ -277,7 +277,7 @@ These serve two different purposes:
 
 Configure the AdGuard target on the homelab's Newt site with scheme `https` and port `443`: `https://10.10.10.53:443` in this example. Use the backend TLS server name matching AdGuard's certificate and configure the issuing CA as trusted where required. The IP identifies the destination; it is not necessarily a name covered by the certificate.
 
-Inspect the effective configuration through a private/authenticated Traefik dashboard or from the trusted Docker network. Find the generated service name and insert it into the custom DoH router. The original setup used `2-AdGuard-DoH-Test-service@http`; this name is installation-specific.
+Inspect the effective configuration through a private/authenticated Traefik dashboard or from the trusted Docker network. Find the generated service name and insert it into the custom DoH router. The original setup used `REPLACE_WITH_PANGOLIN_GENERATED_SERVICE@http`; this name is installation-specific.
 
 The custom router uses the generated **service**, not the generated router's authentication chain. A DNS client cannot complete Pangolin's browser login. The mTLS route must therefore be the only admitted public path to this backend.
 
