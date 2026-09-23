@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# Allow selected top-level files
+!.gitignore
+!README.md
+!LICENSE
